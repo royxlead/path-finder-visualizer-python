@@ -1,11 +1,17 @@
-import time  
+import time
 from utils import draw_grid
-from node import Node
+
 
 def dfs(start, end, grid, canvas):
+    """Depth-first search (iterative) visualization.
+
+    Avoids revisiting nodes and skips non-walkable nodes.
+    """
     visited = set()
     stack = [start]
     came_from = {}
+
+    visited.add(start)
 
     while stack:
         current = stack.pop()
@@ -15,15 +21,19 @@ def dfs(start, end, grid, canvas):
             return
 
         for neighbor in get_neighbors(current, grid):
-            if neighbor not in visited:
-                visited.add(neighbor)
-                stack.append(neighbor)
-                came_from[neighbor] = current
+            if not getattr(neighbor, "walkable", True):
+                continue
+            if neighbor in visited:
+                continue
 
-                current.color = (255, 0, 0)  
-                draw_grid(grid, canvas)
-                canvas.after(50)  
-                canvas.update()
+            visited.add(neighbor)
+            stack.append(neighbor)
+            came_from[neighbor] = current
+
+            current.color = (255, 0, 0)
+            draw_grid(grid, canvas)
+            canvas.after(50)
+            canvas.update()
 
     reconstruct_path(came_from, current, grid, canvas)
 
@@ -37,14 +47,14 @@ def reconstruct_path(came_from, current, grid, canvas):
 
 def get_neighbors(node, grid):
     neighbors = []
-    x, y = node.x, node.y 
+    x, y = node.x, node.y
     if x > 0:
-        neighbors.append(grid[x - 1][y])  
+        neighbors.append(grid[x - 1][y])
     if x < len(grid) - 1:
-        neighbors.append(grid[x + 1][y])  
+        neighbors.append(grid[x + 1][y])
     if y > 0:
-        neighbors.append(grid[x][y - 1])  
+        neighbors.append(grid[x][y - 1])
     if y < len(grid[0]) - 1:
-        neighbors.append(grid[x][y + 1])  
+        neighbors.append(grid[x][y + 1])
 
     return neighbors

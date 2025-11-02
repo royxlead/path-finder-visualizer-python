@@ -1,10 +1,15 @@
-from node import ROWS, COLS
-
 def get_neighbors(node, grid):
+    """Return orthogonal neighbors for `node` within `grid` bounds.
+
+    node.x is row, node.y is column.
+    """
     neighbors = []
+    rows = len(grid)
+    cols = len(grid[0]) if rows else 0
+
     directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
-    for d in directions:
-        new_row, new_col = node.row + d[0], node.col + d[1]
-        if 0 <= new_row < ROWS and 0 <= new_col < COLS:
-            neighbors.append(grid[new_row][new_col])
+    for dr, dc in directions:
+        nr, nc = node.x + dr, node.y + dc
+        if 0 <= nr < rows and 0 <= nc < cols:
+            neighbors.append(grid[nr][nc])
     return neighbors

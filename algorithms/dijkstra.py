@@ -1,23 +1,34 @@
-import time  
+import time
 from utils import draw_grid
-from node import Node
 import heapq
 
 
 def dijkstra(start, end, grid, canvas):
+    """Dijkstra's algorithm visualization using a priority queue.
+
+    Treats each edge with cost 1. Skips non-walkable neighbors.
+    """
     open_set = []
-    heapq.heappush(open_set, (0, start))  
+    heapq.heappush(open_set, (0, start))
     came_from = {}
     distance = {start: 0}
 
+    visited = set()
+
     while open_set:
         _, current = heapq.heappop(open_set)
+        if current in visited:
+            continue
+        visited.add(current)
 
         if current == end:
             reconstruct_path(came_from, current, grid, canvas)
             return
 
         for neighbor in get_neighbors(current, grid):
+            if not getattr(neighbor, "walkable", True):
+                continue
+
             tentative_distance = distance[current] + 1
 
             if neighbor not in distance or tentative_distance < distance[neighbor]:
@@ -27,7 +38,7 @@ def dijkstra(start, end, grid, canvas):
 
                 current.color = (255, 0, 0)
                 draw_grid(grid, canvas)
-                canvas.after(50)  
+                canvas.after(50)
                 canvas.update()
 
     reconstruct_path(came_from, current, grid, canvas)

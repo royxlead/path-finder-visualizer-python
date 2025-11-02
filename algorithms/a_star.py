@@ -1,23 +1,35 @@
-import time  
+import time
 from utils import draw_grid
-from node import Node
 import heapq
 
+
 def a_star(start, end, grid, canvas):
+    """A* search visualization using Manhattan heuristic.
+
+    Skips non-walkable neighbors and avoids revisiting already expanded nodes.
+    """
     open_set = []
     heapq.heappush(open_set, (0, start))
     came_from = {}
     g_score = {start: 0}
     f_score = {start: heuristic(start, end)}
 
+    visited = set()
+
     while open_set:
         _, current = heapq.heappop(open_set)
+        if current in visited:
+            continue
+        visited.add(current)
 
         if current == end:
             reconstruct_path(came_from, current, grid, canvas)
             return
 
         for neighbor in get_neighbors(current, grid):
+            if not getattr(neighbor, "walkable", True):
+                continue
+
             tentative_g_score = g_score[current] + 1
 
             if neighbor not in g_score or tentative_g_score < g_score[neighbor]:
@@ -26,11 +38,9 @@ def a_star(start, end, grid, canvas):
                 came_from[neighbor] = current
                 heapq.heappush(open_set, (f_score[neighbor], neighbor))
 
-                current.color = (255, 0, 0)  
+                current.color = (255, 0, 0)
                 draw_grid(grid, canvas)
-
-                
-                canvas.after(50)  
+                canvas.after(50)
                 canvas.update()
 
     reconstruct_path(came_from, current, grid, canvas)

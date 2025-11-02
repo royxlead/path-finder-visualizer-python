@@ -32,8 +32,9 @@ def draw_grid():
 
     for row in grid:
         for node in row:
-            x1 = node.x * cell_width
-            y1 = node.y * cell_height
+            # node.x is row index, node.y is column index
+            x1 = node.y * cell_width
+            y1 = node.x * cell_height
             x2 = x1 + cell_width
             y2 = y1 + cell_height
 

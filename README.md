@@ -1,71 +1,72 @@
 # Path Finder Visualizer (Python – Tkinter)
 
-An interactive **pathfinding algorithm visualizer** built with **Python** and **Tkinter**. Easily visualize how BFS, DFS, A\*, and Dijkstra's algorithms traverse a grid to find the shortest path.
+An interactive pathfinding algorithm visualizer built with Python and Tkinter. Use it to see how BFS, DFS, A*, and Dijkstra traverse a grid to find a path.
 
-## Features
+This repository is a small learning project and demo. It's intentionally lightweight and depends only on the Python standard library (Tkinter for UI).
 
-* **Algorithm Visualizations**: Supports:
+## Highlights
 
-  * BFS (Breadth-First Search)
-  * DFS (Depth-First Search)
-  * A\* (A-Star)
-  * Dijkstra's Algorithm
-* **Interactive Grid UI**: Click to set customized **start (blue)** and **end (orange)** nodes, then watch pathfinding unfold.
-* **Grid Auto-Reset**: After each run, the grid resets automatically for a fresh visualization. ([GitHub][1])
+- Visualizations for BFS, DFS, A*, and Dijkstra
+- Simple Tkinter-based grid UI
+- Clear code structure to learn from and extend
 
-## Installation & Running
+## Requirements
 
-1. **Clone the repository**
+- Python 3.7 or newer
+- Tkinter (usually included with standard Python distributions)
 
-   ```bash
-   git clone https://github.com/royxlead/path-finder-visualizer-python.git
-   cd path-finder-visualizer-python
-   ```
+On most systems Tkinter is bundled with Python. If `tkinter` is missing, install it via your OS package manager (e.g., `apt`, `brew`, or Windows installer).
 
-2. **Install dependencies**
-   Ensure you have **Python 3.7+** installed.
-   (Currently no external dependencies specified; modify as needed.) ([GitHub][1])
+## Quick start (Windows / PowerShell)
 
-3. **Run the application**
+Create and activate a virtual environment, then run the app:
 
-   ```bash
-   python main.py
-   ```
-
-## Usage Guide
-
-1. Launch opens an interactive grid window.
-2. Set **start node** (blue) and **end node** (orange) via clicks.
-3. Choose a pathfinding algorithm from available options.
-4. Run the visualization and observe the pathfinding in real time.
-5. After completion, the grid resets automatically for your next try. ([GitHub][1])
-
-## Code Structure
-
-```
-path-finder-visualizer-python/
-├── main.py          # GUI controller and application entry point
-├── algorithms/      # Implementations of BFS, DFS, A*, Dijkstra's
-├── node.py          # Definition and behavior of individual grid nodes
-├── helper.py        # Support functions for grid interactions
-├── utils.py         # Helper utilities (e.g., grid drawing, reset logic)
-├── README.md        # This documentation
-└── LICENSE          # MIT License file
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python main.py
 ```
 
-([GitHub][1])
+Or simply run with your system Python:
 
-## Customization
+```powershell
+python main.py
+```
 
-* Modify grid behavior, node colors, or algorithm speed via parameters in `main.py` or `node.py`.
-* Easily extend features like adjustable grid size or add maze generation. ([GitHub][1])
+## Usage
 
-## Future Enhancements
+1. The app opens a grid window. The default start node is blue (top-left) and the end node is orange (bottom-right).
+2. Choose an algorithm from the dropdown (BFS, DFS, A*, Dijkstra).
+3. Click "Start Visualization" to run the visualization.
 
-* Support **manual obstacle placement** and **grid resizing**.
-* Introduce **diagonal movement** and **weighted nodes** for complex visualization.
-* Add **UI improvements**—like animation speed control or algorithm selection dropdowns.
+Notes:
+- The grid size and colors can be adjusted in `node.py` and `main.py`.
+- The project currently uses automatic start/end placement; adding mouse-based placement and obstacle drawing is an easy extension.
 
-## Contribution
+## Development
 
-Contributions are welcome! Feel free to fork, tweak, and submit a pull request.
+- Code lives in these files:
+
+```
+main.py               # App entry and GUI
+node.py               # Node data structure and helpers
+utils.py              # Drawing helpers
+helper.py             # Grid neighbor utilities
+algorithms/           # BFS/DFS/A*/Dijkstra implementations
+```
+
+- A `.gitignore` has been added to ignore venvs, caches, and IDE files.
+
+## Tests and linting (suggested next steps)
+
+- Add a `requirements.txt` or `pyproject.toml` if you add non-stdlib dependencies.
+- Add unit tests under a `tests/` directory covering algorithm correctness and neighbor logic.
+- Optionally enable `black` and `flake8` for consistent formatting and linting.
+
+## Contributing
+
+Contributions and improvements are welcome. If you add features (mouse interaction, obstacle drawing, adjustable speed), please include tests and update the README to document them.
+
+## License
+
+MIT
